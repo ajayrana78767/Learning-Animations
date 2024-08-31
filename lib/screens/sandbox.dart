@@ -120,7 +120,7 @@ class _SandboxState extends State<Sandbox> {
               height: containerHeight,
               width: containerWidth,
               decoration: const BoxDecoration(
-                color: Color.fromARGB(255, 187, 105, 99),
+                color: Colors.white,
                 shape: BoxShape.rectangle,
               ),
               duration: const Duration(seconds: 2), // Smooth animation duration
@@ -143,29 +143,52 @@ class _SandboxState extends State<Sandbox> {
               duration: const Duration(seconds: 3),
               child: timerCompleted
                   ? Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment
                             .center, // Center the content vertically
-                           // crossAxisAlignment: CrossAxisAlignment.center,
+                        // crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Text(
-                            textAlign: TextAlign.center,
-                            'WELCOME TO OUR APP',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 48,
-                              fontWeight: FontWeight.bold,
+                          ShaderMask(
+                            shaderCallback: (bounds) => const LinearGradient(
+                              colors: [
+                                Colors.black,
+                                Color.fromRGBO(251, 182, 26, 1),
+                              ],
+                              tileMode: TileMode.clamp,
+                            ).createShader(bounds),
+                            child: const Text(
+                              'WELCOME TO OUR APP',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 48,
+                                fontWeight: FontWeight.bold,
+                                color: Colors
+                                    .white, // This color is used as a fallback
+                              ),
                             ),
                           ),
-                          const SizedBox(height: 16), // Adjust the height as needed
+
+                          const SizedBox(
+                              height: 16), // Adjust the height as needed
                           Image.network(
-                              'https://i.gifer.com/XK9U.gif',
-                              width: 300,
-                              height: 300),
+                            'https://th.bing.com/th/id/R.39df44bdbedef720881dfdace9297b91?rik=kdcdDXSWEFgZkw&riu=http%3a%2f%2fwww.clipartbest.com%2fcliparts%2fdi6%2fxe6%2fdi6xe6z9T.gif&ehk=0LkbeAihmqhQS1ZkmDRxFyGQpdYmuo7hL%2byAcp2y9Pk%3d&risl=&pid=ImgRaw&r=0',
+                            loadingBuilder: (context, child, progress) {
+                              if (progress == null) {
+                                return child;
+                              } else {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                            },
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Center(
+                                  child: Text('Failed to load image'));
+                            },
+                          )
                         ],
                       ),
-                  )
+                    )
                   : const SizedBox
                       .shrink(), // Hide text until animation completes
             ),
