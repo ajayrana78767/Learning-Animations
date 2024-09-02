@@ -22,10 +22,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Sandbox(
-        initialContainerHeight: 100,
-        initialContainerWidth: 100,
-      ), // Initial small size),
+      home:const ContactsScreen()
+      //  const Sandbox(
+      //   initialContainerHeight: 100,
+      //   initialContainerWidth: 100,
+      // ), // Initial small size),
     );
   }
 }
